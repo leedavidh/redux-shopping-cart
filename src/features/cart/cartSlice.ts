@@ -1,4 +1,10 @@
-import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createSlice,
+  createSelector,
+  PayloadAction,
+  createAsyncThunk,
+} from '@reduxjs/toolkit';
+import { checkout, CartItems } from '../../app/api';
 import type { RootState, AppDispatch } from '../../app/store';
 
 type CheckoutState = 'LOADING' | 'READY' | 'ERROR';
@@ -6,6 +12,7 @@ type CheckoutState = 'LOADING' | 'READY' | 'ERROR';
 export interface CartState {
   items: { [productID: string]: number };
   checkoutState: CheckoutState;
+  errorMessage: string;
 }
 
 /*
@@ -17,7 +24,16 @@ export interface CartState {
 const initialState: CartState = {
   items: {},
   checkoutState: 'READY',
+  errorMessage: '',
 };
+
+export const checkoutCart = createAsyncThunk(
+  'cart/checkout',
+  async (items: CartItems) => {
+    const response = await checkout(items);
+    return response;
+  }
+);
 
 // https://redux-toolkit.js.org/usage/usage-with-typescript
 const cartSlice = createSlice({
@@ -44,17 +60,22 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase('cart/checkout/pending', (state, action) => {
+    builder.addCase(checkoutCart.pending, (state, action) => {
       //console.log('cart/checkout/pending');
       state.checkoutState = 'LOADING';
     });
-    builder.addCase('cart/checkout/fulfilled', (state, action) => {
+    builder.addCase(checkoutCart.fulfilled, (state, action) => {
       state.checkoutState = 'READY';
+    });
+    builder.addCase(checkoutCart.rejected, (state, action) => {
+      state.checkoutState = 'ERROR';
+      state.errorMessage = action.error.message || '';
     });
   },
 });
 
 // https://redux.js.org/usage/writing-logic-thunks#redux-thunk-middleware
+/*
 export function checkout() {
   console.log('checkout');
   return (dispatch: AppDispatch) => {
@@ -65,6 +86,7 @@ export function checkout() {
     }, 500);
   };
 }
+*/
 
 export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
