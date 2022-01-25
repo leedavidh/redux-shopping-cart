@@ -59,3 +59,15 @@ export const getMemoizedNumItems = createSelector(
 the createSelector function will remember the value of its final selector 
 as long as the first one hasn't changed.
 */
+
+export const getTotalPrice = createSelector(
+  (state: RootState) => state.cart.items,
+  (state: RootState) => state.products.products,
+  (items, products) => {
+    let total = 0;
+    for (let id in items) {
+      total += products[id].price * items[id];
+    }
+    return total.toFixed(2);
+  }
+);
