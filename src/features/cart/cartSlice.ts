@@ -1,5 +1,5 @@
 import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store';
+import type { RootState, AppDispatch } from '../../app/store';
 
 type CheckoutState = 'LOADING' | 'READY' | 'ERROR';
 
@@ -19,6 +19,7 @@ const initialState: CartState = {
   checkoutState: 'READY',
 };
 
+// https://redux-toolkit.js.org/usage/usage-with-typescript
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -42,12 +43,28 @@ const cartSlice = createSlice({
       state.items[id] = quantity;
     },
   },
-  extraReducers: function (builder) {
+  extraReducers: (builder) => {
     builder.addCase('cart/checkout/pending', (state, action) => {
+      //console.log('cart/checkout/pending');
       state.checkoutState = 'LOADING';
+    });
+    builder.addCase('cart/checkout/fulfilled', (state, action) => {
+      state.checkoutState = 'READY';
     });
   },
 });
+
+// https://redux.js.org/usage/writing-logic-thunks#redux-thunk-middleware
+export function checkout() {
+  console.log('checkout');
+  return (dispatch: AppDispatch) => {
+    //console.log('dispatching cart/checkout/pending');
+    dispatch({ type: 'cart/checkout/pending' });
+    setTimeout(() => {
+      dispatch({ type: 'cart/checkout/fulfilled' });
+    }, 500);
+  };
+}
 
 export const { addToCart, removeFromCart, updateQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
