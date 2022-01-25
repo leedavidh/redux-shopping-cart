@@ -26,7 +26,7 @@ const initialState: CartState = {
   checkoutState: 'READY',
   errorMessage: '',
 };
-
+/*
 export const checkoutCart = createAsyncThunk(
   'cart/checkout',
   async (items: CartItems) => {
@@ -34,6 +34,31 @@ export const checkoutCart = createAsyncThunk(
     return response;
   }
 );
+*/
+export const checkoutCart = createAsyncThunk(
+  'cart/checkout',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState() as RootState;
+    const items = state.cart.items;
+    const response = await checkout(items);
+    return response;
+  }
+);
+
+/*
+
+export const checkoutCart = createAsyncThunk<{
+ success: boolean}, 
+ undefined, 
+ { state: RootState } 
+>("cart/checkout", async (_, thunkAPI) => {
+ const sate = thunkAPI.getState();
+ const items = state.cart.items;
+ const response = await checkout(items);
+ return response;
+})
+
+*/
 
 // https://redux-toolkit.js.org/usage/usage-with-typescript
 const cartSlice = createSlice({
