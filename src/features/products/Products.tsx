@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { receivedProducts } from './productsSlice';
 import { getProducts, Product } from '../../app/api';
 import styles from './Products.module.css';
 
 export function Products() {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    getProducts().then((products) => {
+      // setProducts(products);
+      dispatch(receivedProducts(products));
+    });
+  }, []);
   /*
   const [products, setProducts] = useState<Product[]>([]);
   useEffect(() => {
