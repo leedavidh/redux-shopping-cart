@@ -13,5 +13,5 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 /*
     Redux provides useDispatch and useSelector hooks for React, 
     but in order to have them aware of the types that we've just defined 
-    in our sort.ts file, we have to re-export new functions that are type aware. 
+    in our hooks.ts file, we have to re-export new functions that are type aware. 
 */
