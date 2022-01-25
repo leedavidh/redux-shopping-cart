@@ -27,10 +27,13 @@ const cartSlice = createSlice({
         state.items[id] = 1;
       }
     },
+    removeFromCart(state, action: PayloadAction<string>) {
+      delete state.items[action.payload];
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
 export function getNumItems(state: RootState) {
