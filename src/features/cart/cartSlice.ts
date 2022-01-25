@@ -64,9 +64,20 @@ const cartSlice = createSlice({
       //console.log('cart/checkout/pending');
       state.checkoutState = 'LOADING';
     });
-    builder.addCase(checkoutCart.fulfilled, (state, action) => {
-      state.checkoutState = 'READY';
-    });
+    builder.addCase(
+      checkoutCart.fulfilled,
+      (state, action: PayloadAction<{ success: boolean }>) => {
+        const { success } = action.payload;
+        if (success) {
+          state.checkoutState = 'READY';
+          state.items = {};
+        } else {
+          // to handle { success: false } backend response
+          state.checkoutState = 'ERROR';
+        }
+        state.checkoutState = 'READY';
+      }
+    );
     builder.addCase(checkoutCart.rejected, (state, action) => {
       state.checkoutState = 'ERROR';
       state.errorMessage = action.error.message || '';
