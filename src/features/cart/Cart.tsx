@@ -16,6 +16,11 @@ export function Cart() {
     dispatch(updateQuantity({ id, quantity }));
   }
 
+  function onCheckout(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault(); // to prevent form submit
+    dispatch({ type: 'cart/checkout/pending' });
+  }
+
   const tableClasses = classNames({
     [styles.table]: true,
     [styles.checkoutError]: checkoutState === 'ERROR',
@@ -68,7 +73,7 @@ export function Cart() {
           </tr>
         </tfoot>
       </table>
-      <form>
+      <form onSubmit={onCheckout}>
         <button className={styles.button} type="submit">
           Checkout
         </button>
