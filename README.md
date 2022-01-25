@@ -12,3 +12,5 @@ npm install -D express
 ```
 
 https://redux.js.org/usage/usage-with-typescript#application-usage
+
+https://github.com/zalmoxisus/redux-devtools-extension

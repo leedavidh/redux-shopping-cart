@@ -25,7 +25,7 @@ export function Cart() {
   function onCheckout(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault(); // to prevent form submit
     // dispatch({ type: 'cart/checkout/pending' });
-    dispatch(checkoutCart(items));
+    dispatch(checkoutCart());
   }
 
   const tableClasses = classNames({
