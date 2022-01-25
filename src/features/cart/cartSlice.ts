@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, createSelector, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 export interface CartState {
@@ -40,3 +40,22 @@ export function getNumItems(state: RootState) {
   }
   return numItems;
 }
+
+// basically the same as we had in our getNumbItems function,
+//  except it's running on the items object instead of the entire state.
+export const getMemoizedNumItems = createSelector(
+  (state: RootState) => state.cart.items,
+  (items) => {
+    console.log('calling getMemoizedNumItems');
+    let numItems = 0;
+    for (let id in items) {
+      numItems += items[id];
+    }
+    return numItems;
+  }
+);
+
+/*
+the createSelector function will remember the value of its final selector 
+as long as the first one hasn't changed.
+*/
