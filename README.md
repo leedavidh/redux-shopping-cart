@@ -43,7 +43,8 @@ open coverage/lcov-report/index.html
 
 ## Testing Tips
 
-- test.todo
-  Open up a terminal window side-by-side.
-  Type `npx jest --watch`
-  Type p to filter and enter 'cartSlice'
+### test.todo
+
+1. Open up a terminal window side-by-side.
+2. Type `npx jest --watch`
+3. Type p to filter and enter 'cartSlice'
