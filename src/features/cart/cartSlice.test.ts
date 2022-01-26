@@ -4,6 +4,7 @@ import cartReducer, {
   removeFromCart,
   updateQuantity,
   getNumItems,
+  getMemoizedNumItems,
 } from './cartSlice';
 import type { RootState } from '../../app/store';
 
@@ -89,5 +90,70 @@ describe('selectors', () => {
       const result = getNumItems({ cart } as RootState);
       expect(result).toEqual(6);
     });
+  });
+});
+/*
+describe('getMemoizedNumItems', () => {
+  it.todo('should return 0 with no items');
+  it.todo('should add up the totals');
+  it.todo('should not compute again with the same sale');
+  it.todo('should recompute with new state');
+});
+*/
+/*
+    getMemoizedNumItems is a memoized function, 
+    so we need to add tests that take that into account. 
+    It shouldn't compute again with the same state, 
+    and it should recompute with new state.
+*/
+describe('getMemoizedNumItems', () => {
+  it('should return 0 with no items', () => {
+    const cart: CartState = {
+      checkoutState: 'READY',
+      errorMessage: '',
+      items: {},
+    };
+    const result = getMemoizedNumItems({ cart } as RootState);
+    expect(result).toEqual(0);
+  });
+  it('should add up the total', () => {
+    const cart: CartState = {
+      checkoutState: 'READY',
+      errorMessage: '',
+      items: { abc: 3, def: 3 },
+    };
+    const result = getMemoizedNumItems({ cart } as RootState);
+    expect(result).toEqual(6);
+  });
+  it('should not compute again with the same sale', () => {
+    const cart: CartState = {
+      checkoutState: 'READY',
+      errorMessage: '',
+      items: { abc: 3, def: 3 },
+    };
+    /*
+        The createSelector in RTK comes with a built-in count of 
+        how many times it has recomputed a certain value. 
+        getMomoizedNumItems.resetRecomputations() allows you 
+        to reset that count for your tests.
+      */
+    getMemoizedNumItems.resetRecomputations();
+    getMemoizedNumItems({ cart } as RootState);
+    expect(getMemoizedNumItems.recomputations()).toEqual(1);
+    getMemoizedNumItems({ cart } as RootState);
+    expect(getMemoizedNumItems.recomputations()).toEqual(1);
+  });
+  it('should recompute with new state', () => {
+    const cart: CartState = {
+      checkoutState: 'READY',
+      errorMessage: '',
+      items: { abc: 3, def: 3 },
+    };
+    getMemoizedNumItems.resetRecomputations();
+    getMemoizedNumItems({ cart } as RootState);
+    expect(getMemoizedNumItems.recomputations()).toEqual(1);
+    cart.items = { abc: 2 }; // change the state
+    getMemoizedNumItems({ cart } as RootState);
+    expect(getMemoizedNumItems.recomputations()).toEqual(2);
   });
 });
