@@ -48,3 +48,9 @@ open coverage/lcov-report/index.html
 1. Open up a terminal window side-by-side.
 2. Type `npx jest --watch`
 3. Type p to filter and enter 'cartSlice'
+
+### Redux Mock State (testing-13)
+
+```
+npm install -D redux-mock-store
+```
