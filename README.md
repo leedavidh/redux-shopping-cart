@@ -1,6 +1,6 @@
 https://github.com/xjamundx/redux-shopping-cart
 
-## Setup
+## App Setup
 
 ```
 npm install react-redux
@@ -15,11 +15,28 @@ https://redux.js.org/usage/usage-with-typescript#application-usage
 
 https://github.com/zalmoxisus/redux-devtools-extension
 
-## Testing
+## Testing Setup
 
 ```
 npm install -D jest
 
+npm install -D @babel/preset-react @babel/preset-typescript @babel/preset-env
+```
+
+Note: babel related deps are required to run `npx jest --coverage -- productsSlice`
+
+```
 identity-obj-proxy is included with create-react-app now.
 npm install -D identity-obj-proxy
+```
+
+## Testing Coverage Report
+
+```
+npm test -- --coverage --watchAll=false
+
+npx jest --coverage
+
+open coverage/lcov-report/index.html
+
 ```
