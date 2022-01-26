@@ -97,10 +97,8 @@ const cartSlice = createSlice({
           state.checkoutState = 'READY';
           state.items = {};
         } else {
-          // to handle { success: false } backend response
           state.checkoutState = 'ERROR';
         }
-        state.checkoutState = 'READY';
       }
     );
     builder.addCase(checkoutCart.rejected, (state, action) => {

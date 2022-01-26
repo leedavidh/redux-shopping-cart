@@ -25,6 +25,8 @@ npm install -D @babel/preset-react @babel/preset-typescript @babel/preset-env
 
 Note: babel related deps are required to run `npx jest --coverage -- productsSlice`
 
+npx jest --watch -- cartSlice
+
 ```
 identity-obj-proxy is included with create-react-app now.
 npm install -D identity-obj-proxy
@@ -38,6 +40,8 @@ npm test -- --coverage --watchAll=false
 npx jest --coverage
 
 open coverage/lcov-report/index.html
+
+
 
 ```
 
