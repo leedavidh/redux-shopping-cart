@@ -9,6 +9,30 @@ import cartReducer, {
 } from './cartSlice';
 import type { RootState } from '../../app/store';
 import products from '../../../public/products.json';
+import * as api from '../../app/api';
+
+jest.mock('../../app/api', () => {
+  return {
+    async getProducts() {
+      return [];
+    },
+    async checkout(items: api.CartItems = {}) {
+      const empty = Object.keys(items).length === 0;
+      if (empty) throw new Error('Must include cart items');
+      if (items.badItem > 0) return { success: false };
+      return { success: true };
+    },
+  };
+});
+
+test('checkout should work', async () => {
+  /* test is failing without mocking /app/api
+    fetch is a browser API that doesn't exist natively in Node. 
+    The easiest way to fix this for testing purposes is 
+    to mock out the entire API surface.
+  */
+  await api.checkout({ fakeItem: 4 });
+});
 
 describe('cart reducer', () => {
   //test.todo('an empty action');
