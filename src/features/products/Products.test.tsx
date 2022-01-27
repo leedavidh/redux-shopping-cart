@@ -48,7 +48,7 @@ test('Each individual product should contain a heading', async () => {
   findByRole with await actually waits until the heading is found.
   we don't need to expressly call `await waitFor`
 */
-test('should be able to add a banana to your cart', async () => {
+test.skip('should be able to add a banana to your cart', async () => {
   const { store } = renderWithContext(<Products />);
   const heading = await screen.findByRole('heading', { name: /Banana/i });
   const div = heading.parentNode;
@@ -70,4 +70,13 @@ test('should be able to add a banana to your cart', async () => {
   userEvent.click(button);
   expect(store.getState().cart.items['207']).toEqual(3);
   */
+});
+test('should be able to add a banana to your cart', async () => {
+  const { store } = renderWithContext(<Products />);
+  const button = await screen.findByRole('button', { name: /Bananas/i }); // aria-label
+  userEvent.click(button);
+  expect(store.getState().cart.items['207']).toEqual(1);
+  userEvent.click(button);
+  userEvent.click(button);
+  expect(store.getState().cart.items['207']).toEqual(3);
 });

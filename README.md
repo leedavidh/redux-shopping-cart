@@ -57,6 +57,8 @@ open coverage/lcov-report/index.html
 
 ### screen.getAllByRole vs screen.findByRole (testing23)
 
+### screen.findByRole for aria-label (testing25 )
+
 ### Redux Mock State (testing-13)
 
 ```
@@ -93,4 +95,17 @@ Or add it to package.json
 in package.json, add the following:
   "jest": {
     "testEnvironment": "jsdom",
+```
+
+### TypeError: expect(...).toHaveClass is not a function (testing-30)
+
+https://testing-library.com/docs/react-testing-library/setup
+
+```
+npm install --save-dev @testing-library/jest-dom
+
+add it to package.json
+"jest": {
+  "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"]
+}
 ```
