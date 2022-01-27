@@ -55,6 +55,8 @@ open coverage/lcov-report/index.html
 
 ### jest.spyOn (testin-22)
 
+### screen.getAllByRole vs screen.findByRole (testing23)
+
 ### Redux Mock State (testing-13)
 
 ```
