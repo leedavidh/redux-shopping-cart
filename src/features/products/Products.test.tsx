@@ -1,5 +1,6 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen, waitFor, getByRole } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { renderWithContext } from '../../test-utils';
 import { Products } from './Products';
 import * as api from '../../app/api';
@@ -47,3 +48,26 @@ test('Each individual product should contain a heading', async () => {
   findByRole with await actually waits until the heading is found.
   we don't need to expressly call `await waitFor`
 */
+test('should be able to add a banana to your cart', async () => {
+  const { store } = renderWithContext(<Products />);
+  const heading = await screen.findByRole('heading', { name: /Banana/i });
+  const div = heading.parentNode;
+  const button = getByRole(div as HTMLElement, 'button');
+  userEvent.click(button);
+  console.log(store.getState().cart.items); // { '207': 1 }
+  expect(store.getState().cart.items['207']).toEqual(1);
+  userEvent.click(button);
+  userEvent.click(button);
+  console.log(store.getState().cart.items); // { '207': 3 }
+  expect(store.getState().cart.items['207']).toEqual(3);
+
+  /*
+  const { store } = renderWithContext(<Products />);
+  const button = await screen.findByRole('button', { name: /Bananas/i });
+  userEvent.click(button);
+  expect(store.getState().cart.items['207']).toEqual(1);
+  userEvent.click(button);
+  userEvent.click(button);
+  expect(store.getState().cart.items['207']).toEqual(3);
+  */
+});
