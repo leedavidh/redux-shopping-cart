@@ -57,4 +57,28 @@ open coverage/lcov-report/index.html
 
 ```
 npm install -D redux-mock-store
+npm install -D @types/redux-mock-store
+```
+
+### Jest error with css modules
+
+```
+Install package:
+
+npm i --save-dev identity-obj-proxy
+
+Add in jest.config.js
+
+module.exports = {
+  "moduleNameMapper": {
+    "\\.(css|less|scss)$": "identity-obj-proxy"
+  }
+}
+Or add it to package.json
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(css|less)$": "identity-obj-proxy"
+    }
+
+
 ```
