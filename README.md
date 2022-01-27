@@ -96,3 +96,16 @@ in package.json, add the following:
   "jest": {
     "testEnvironment": "jsdom",
 ```
+
+### TypeError: expect(...).toHaveClass is not a function (testing-30)
+
+https://testing-library.com/docs/react-testing-library/setup
+
+```
+npm install --save-dev @testing-library/jest-dom
+
+add it to package.json
+"jest": {
+  "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"]
+}
+```
