@@ -14,6 +14,7 @@ import cartReducer, {
 import { RootState, getStoreWithState } from '../../app/store';
 import products from '../../../public/products.json';
 import * as api from '../../app/api';
+import { getStateWithItems } from '../../test-utils';
 
 const mockStore = configureStore([thunk]);
 
@@ -461,11 +462,3 @@ describe('thunks', () => {
     });
   });
 });
-
-function getStateWithItems(items: Record<string, number>): RootState {
-  const state: RootState = {
-    products: { products: {} },
-    cart: { errorMessage: '', checkoutState: 'READY', items },
-  };
-  return state;
-}
