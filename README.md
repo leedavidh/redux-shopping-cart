@@ -57,6 +57,8 @@ open coverage/lcov-report/index.html
 
 ### screen.getAllByRole vs screen.findByRole (testing23)
 
+### screen.findByRole for aria-label (testing25 )
+
 ### Redux Mock State (testing-13)
 
 ```
