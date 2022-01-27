@@ -53,6 +53,8 @@ open coverage/lcov-report/index.html
 2. Type `npx jest --watch`
 3. Type p to filter and enter 'cartSlice'
 
+### jest.spyOn (testin-22)
+
 ### Redux Mock State (testing-13)
 
 ```
@@ -81,4 +83,12 @@ Or add it to package.json
     }
 
 
+```
+
+### rener error with `document`
+
+```
+in package.json, add the following:
+  "jest": {
+    "testEnvironment": "jsdom",
 ```
