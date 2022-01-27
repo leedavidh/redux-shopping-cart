@@ -8,7 +8,7 @@ import mockProducts from '../../../public/products.json';
 const getProductsSpy = jest.spyOn(api, 'getProducts');
 getProductsSpy.mockResolvedValue(mockProducts);
 
-test('<Products />', async () => {
+test.skip('<Products />', async () => {
   const { debug } = renderWithContext(<Products />);
   debug();
   /*
@@ -29,3 +29,21 @@ console.log
   await waitFor(() => expect(getProductsSpy).toHaveBeenCalledTimes(1));
   debug();
 });
+
+test('several products should be listed', async () => {
+  renderWithContext(<Products />);
+  await waitFor(() => expect(getProductsSpy).toHaveBeenCalledTimes(1));
+  const articles = screen.getAllByRole('article');
+  expect(articles.length).toEqual(mockProducts.length);
+});
+test('Each individual product should contain a heading', async () => {
+  renderWithContext(<Products />);
+  for (let product of mockProducts) {
+    await screen.findByRole('heading', { name: product.name });
+  }
+});
+/*
+  when we call findByRole instead of getByRole, 
+  findByRole with await actually waits until the heading is found.
+  we don't need to expressly call `await waitFor`
+*/
